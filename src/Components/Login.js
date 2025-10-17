@@ -2,19 +2,17 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { API_BASE_URL } from "../config";
 
-const Login = ({ showAlert, setIsAuthenticated }) => {
+const Login = ({ showAlert, setIsAuthenticated, isAuthenticated }) => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const host = API_BASE_URL;
   const navigate = useNavigate();
 
-  // Redirect if user is already logged in
+  // Redirect if already logged in
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsAuthenticated(true);
-      navigate("/"); // Redirect to home if already logged in
+    if (isAuthenticated) {
+      navigate("/");
     }
-  }, [navigate, setIsAuthenticated]);
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,11 +27,10 @@ const Login = ({ showAlert, setIsAuthenticated }) => {
       });
       const json = await response.json();
       if (json.success) {
-        // Store JWT and update state
         localStorage.setItem("token", json.authToken);
         setIsAuthenticated(true);
         showAlert("Logged in Successfully!", "success");
-        navigate("/"); // Redirect to home
+        navigate("/");
       } else {
         showAlert("Invalid Credentials!", "danger");
       }
@@ -53,11 +50,7 @@ const Login = ({ showAlert, setIsAuthenticated }) => {
         <div className="col-md-6 col-lg-5">
           <div
             className="card border-0 shadow-lg"
-            style={{
-              borderRadius: "15px",
-              overflow: "hidden",
-              background: "white",
-            }}
+            style={{ borderRadius: "15px", overflow: "hidden", background: "white" }}
           >
             <div
               className="card-header text-center py-4"
@@ -68,17 +61,12 @@ const Login = ({ showAlert, setIsAuthenticated }) => {
               }}
             >
               <h3 className="mb-0 fw-bold">Welcome Back</h3>
-              <p className="text-white-50 mb-0">
-                Sign in to continue to NoteNest
-              </p>
+              <p className="text-white-50 mb-0">Sign in to continue to NoteNest</p>
             </div>
             <div className="card-body p-4">
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
-                  <label
-                    htmlFor="email"
-                    className="form-label fw-semibold text-secondary"
-                  >
+                  <label htmlFor="email" className="form-label fw-semibold text-secondary">
                     Email address
                   </label>
                   <div className="input-group">
@@ -99,10 +87,7 @@ const Login = ({ showAlert, setIsAuthenticated }) => {
                   </div>
                 </div>
                 <div className="mb-4">
-                  <label
-                    htmlFor="password"
-                    className="form-label fw-semibold text-secondary"
-                  >
+                  <label htmlFor="password" className="form-label fw-semibold text-secondary">
                     Password
                   </label>
                   <div className="input-group">
@@ -139,10 +124,7 @@ const Login = ({ showAlert, setIsAuthenticated }) => {
               <div className="text-center mt-4">
                 <p className="mb-0 text-secondary">
                   Don't have an account?{" "}
-                  <Link
-                    to="/signup"
-                    style={{ color: "#6a11cb", fontWeight: "600" }}
-                  >
+                  <Link to="/signup" style={{ color: "#6a11cb", fontWeight: "600" }}>
                     Sign Up
                   </Link>
                 </p>
