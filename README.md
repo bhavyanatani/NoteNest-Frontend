@@ -19,7 +19,7 @@ It allows users to **sign up, log in, create, edit, and delete notes** through a
 ## ⚙️ Setup Instructions
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/NoteNest-Frontend.git
+   git clone https://github.com/bhavyanatani/NoteNest-Frontend.git
    ```
 2. **Install dependencies**
    ```bash
