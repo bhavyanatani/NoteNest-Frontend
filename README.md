@@ -45,7 +45,6 @@ The backend for this project can be found here:
 NoteNest-Frontend/
 ├── src/
 │   ├── components/
-│   ├── pages/
 │   ├── Context/
 │   ├── App.js
 │   ├── config.js
